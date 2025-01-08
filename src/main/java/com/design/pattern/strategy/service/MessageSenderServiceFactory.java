@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class MessageSenderServiceFactory {
-    private final Map<MessageType, MessageSenderService> serviceTypeMap = new EnumMap<>(MessageType.class);
+    private Map<MessageType, MessageSenderService> serviceTypeMap = new EnumMap<>(MessageType.class);
 
     public MessageSenderServiceFactory(final Set<MessageSenderService> services) {
         registerServices(services);
