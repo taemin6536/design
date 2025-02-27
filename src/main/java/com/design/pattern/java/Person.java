@@ -12,7 +12,15 @@ import java.util.Objects;
 
 
 public class Person {
-    String name;
+    private String name;
+    private String age;
+
+
+    static int count = 0;
+
+
+
+
 
     public String getName() {
         return name;
@@ -22,9 +30,16 @@ public class Person {
         this.name = name;
     }
 
-    public Person(String name) {
+    public Person(String name, String age) {
         this.name = name;
+        this.age = age;
     }
+
+    public Person() {}
+
+//    public Person(String name) {
+//        this.name = name;
+//    }
 
     @Override
     public boolean equals(Object o) {
