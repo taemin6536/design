@@ -16,9 +16,9 @@ public class Test {
             return Math.PI * c.radius() * c.radius();
         } else if (shape instanceof Rectangle r) {
             return r.width() * r.height();
-        } else {
-            throw new IllegalArgumentException("Unknown shape: " + shape);
         }
+
+        return 0;
     }
 
     public double calculateArea3(Shape shape) {
@@ -28,9 +28,9 @@ public class Test {
         } else if (shape instanceof Rectangle) {
             Rectangle r = (Rectangle) shape;
             return r.width() * r.height();
-        } else {
-            throw new IllegalArgumentException("Unknown shape: " + shape);
         }
+
+        return 0;
     }
 
 
