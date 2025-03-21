@@ -5,6 +5,7 @@ public class Test {
 
     }
 
+    // java 21 ~
     public double calculateArea(Shape shape) {
         return switch (shape) {
             case Circle c -> Math.PI * c.radius() * c.radius();
@@ -12,6 +13,7 @@ public class Test {
         };
     }
 
+    // java 16 ~
     public double calculateArea2(Shape shape) {
         if (shape instanceof Circle c) {
             return Math.PI * c.radius() * c.radius();
@@ -22,6 +24,7 @@ public class Test {
         return 0;
     }
 
+    // java 1.0 ~
     public double calculateArea3(Shape shape) {
         if (shape instanceof Circle) {
             Circle c = (Circle) shape;
