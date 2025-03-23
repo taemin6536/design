@@ -1,115 +1,93 @@
 package com.design.pattern.java;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Test3 {
     public static void main(String[] args) {
-        // ArithmeticException예제
-//        int a = 10;
-//        int b = 0;
-//
-//        try {
-//            int c = a / b;
-//        } catch (ArithmeticException e) {
-//            System.out.println("ArithmeticException");
-//        } catch (Exception e) {
-//            System.out.println("Exception");
-//        } finally {
-//            System.out.println("Finally");
-//        }
-
-        //동등성과 동일성
-        // 동등성은 위치, 동일성은 형태?
-        // 동일성은 값 그자체가 같은가? == 연산자로 비교
-        // 동등성은 객체의 해시코드가 같은가? hashcode ? : 메모리 주소 기반 임의의 정수값  equals()
-
-        // 8234576235
-//        Person p = new Person("taemin");
-//        // 2634757234
-//        Person p2 = new Person("taemin");
-//
-//        System.out.println(p.equals(p2));
-//        System.out.println(p == p2);
-
-        //nullpointerexception 예제
-        String str = null;
-        try {
-            System.out.println(str.length());
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException");
-        } catch (Exception e) {
-            System.out.println("Exception");
-        } finally {
-            //db connection close
-
-        }
+        reverseString(new char[]{'h', 'e', 'l', 'l', 'o'});
+    }
 
 
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase().replaceAll("[^a-z0-9]", "");
+        return new StringBuilder(s).reverse().toString().equals(s);
+    }
 
-        class Solution {
-            public boolean isPalindrome(int x) {
-                String str = Integer.toString(x);
-                int len = str.length();
-                for (int i = 0; i < len / 2; i++) {
-                    if (str.charAt(i) != str.charAt(len - i - 1)) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        }
-
-        List<Integer> list = new ArrayList<>();
-        list.add(2);list.add(4);list.add(3);
-        //list reverse 만들기 stream 사용
-        Collections.reverse(list);
-//        System.out.println(list);
-
-        String a = "";
-        for (Integer i : list) {
-            a += i;
-        }
-//        System.out.println(a);
-
-
-        String s = "dvdf"; // 5
-        int max = 0;
+    public static void reverseString(char[] s) {
         int left = 0;
-        Set<Character> set = new HashSet<>();
+        int right = s.length - 1;
+        while (left < right) {
+            char temp = s[left];
+            s[left++] = s[right];
+            s[right--] = temp;
+        }
+    }
 
-        char temp = 0;
+    public String[] reorderLogFiles(String[] logs) {
+        List<String> letterLogs = new ArrayList<>();
+        List<String> digitLogs = new ArrayList<>();
 
-        for (int right=0; right<s.length(); right++) {
-            while (set.contains(s.charAt(right))) {
-                // System.out.println("1 set = " + set);
-                set.remove(s.charAt(left));
-                // System.out.println("2 set = " + set);
-                left++;
+        for (String log : logs) {
+            if (Character.isDigit(log.split(" ")[1].charAt(0))) {
+                digitLogs.add(log);
+            } else {
+                letterLogs.add(log);
             }
-            // System.out.println("3 set = " + set);
-            set.add(s.charAt(right));
-            // System.out.println("4 set = " + set);
-            max = Math.max(max, set.size());
-            // System.out.println("max = " + max);
         }
 
-        System.out.println(max);
-    }
-    public int lengthOfLongestSubstring(String s3) {
+        letterLogs.sort((s1, s2) -> {
+            String[] split1 = s1.split(" ", 2);
+            String[] split2 = s2.split(" ", 2);
 
-        return 0;
+            int compare = split1[1].compareTo(split2[1]);
+            if (compare == 0) {
+                return split1[0].compareTo(split2[0]);
+            }
+            return compare;
+        });
+
+        letterLogs.addAll(digitLogs);
+
+        return letterLogs.toArray(new String[0]);
     }
 
+    public String mostCommonWord(String paragraph, String[] banned) {
+        String[] words = paragraph.replaceAll("\\W+", " ").toLowerCase().split(" ");
+        Set<String> set = new HashSet<>(Arrays.asList(banned));
+
+        Map<String, Integer> map = new HashMap<>();
+
+        for (String word : words) {
+            if (!set.contains(word)) {
+                map.put(word, map.getOrDefault(word, 0) + 1);
+            }
+        }
+
+        return Collections.max(map.entrySet(), Map.Entry.comparingByValue()).getKey();
+
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> results = new HashMap<>();
+
+        for (String str : strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String key = Arrays.toString(chars);
+
+            if (!results.containsKey(key)) {
+                results.put(key, new ArrayList<>());
+            }
+
+            results.get(key).add(str);
+        }
+        return new ArrayList<>(results.values());
+    }
 }
