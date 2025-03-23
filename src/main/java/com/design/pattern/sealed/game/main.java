@@ -6,7 +6,8 @@ public class main {
             case Warrior w -> "Warrior with strength " + w.strength();
             case Mage m -> "Mage with mana " + m.mana();
             case Archer a -> "Archer with agility " + a.agility();
-            //케이스가 추가되면 컴파일 오류 발생
+            case abc a -> "asdf";
+            //케이스가 추가되면 컴파일 오류 발생~
             //추가로 디폴트 구현 필요없음. 왜냐? sealed 인터페이스는 하위 클래스만 포함하기 때문
         };
     }

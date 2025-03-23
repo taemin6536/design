@@ -14,12 +14,10 @@ public class main {
         } else if (response instanceof ApiResponse.Error error) {
             System.out.println("오류 발생: " + error.message());
             System.out.println("오류 코드: " + error.errorCode());
-        } else {
-            throw new IllegalStateException("Unexpected value: " + response);
         }
     }
 
-    // 응답 생성 예시
+    // 응답 생성 예시 - 서비스
     public ApiResponse getUserInfo(Long userId) {
         try {
             // API 호출 로직...
