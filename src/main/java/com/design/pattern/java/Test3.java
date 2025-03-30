@@ -5,13 +5,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class Test3 {
     public static void main(String[] args) {
-        reverseString(new char[]{'h', 'e', 'l', 'l', 'o'});
+        Test3 test3 = new Test3();
+        System.out.println(test3.findMedianSortedArrays(new int[]{1, 2}, new int[]{3, 4}));
     }
 
 
@@ -89,5 +91,104 @@ public class Test3 {
             results.get(key).add(str);
         }
         return new ArrayList<>(results.values());
+    }
+
+    int left, maxLen;
+
+    public void extendPalindrome(String s, int j, int k){
+        while(j >= 0 && k < s.length() && s.charAt(j) == s.charAt(k)){
+            j--;
+            k++;
+        }
+
+        if (maxLen < k - j -1) {
+            left = j +1;
+            maxLen = k - j - 1;
+        }
+    }
+
+    public String longestPalindrome(String s) {
+        int len = s.length();
+
+        if (len < 2) return s;
+
+        for (int i = 0; i < len -1; i++) {
+            extendPalindrome(s, i, i+1);
+            extendPalindrome(s, i, i+2);
+        }
+        return s.substring(left, left + maxLen);
+    }
+
+    public int trap(int[] height) {
+        int volume = 0;
+        int left = 0;
+        int right = height.length - 1;
+        int leftMax = height[left];
+        int rightMax = height[right];
+
+        while(left < right){
+            leftMax = Math.max(height[left], leftMax);
+            rightMax = Math.max(height[right], rightMax);
+
+            if (leftMax <= rightMax){
+                volume += leftMax - height[left];
+                left += 1;
+            }else{
+                volume += rightMax - height[right];
+                right -= 1;
+            }
+        }
+        return volume;
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        int left, right, sum;
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]){
+                continue;
+            }
+
+            left = i + 1;
+            right = nums.length - 1;
+            while(left < right) {
+                sum = nums[i] + nums[left] + nums[right];
+
+                if (sum < 0){
+                    left += 1;
+                }else if (sum > 0){
+                    right -= 1;
+                }else{
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+
+                    while(left<right && nums[left] == nums[left +1]){
+                        left += 1;
+                    }
+                    while(left<right && nums[right] == nums[right -1]){
+                        right -= 1;
+                    }
+
+                    left += 1;
+                    right -= 1;
+                }
+            }
+        }
+        return  result;
+    }
+
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] mergedArray = new int[nums1.length + nums2.length];
+        System.arraycopy(nums1, 0, mergedArray, 0, nums1.length);
+        System.arraycopy(nums2, 0, mergedArray, nums1.length, nums2.length);
+        Arrays.sort(mergedArray);
+
+        if (mergedArray.length % 2 != 0){
+            return mergedArray[mergedArray.length / 2];
+        }else {
+            return ((double) mergedArray[mergedArray.length/2] + (double) mergedArray[mergedArray.length / 2 - 1]) / 2;
+        }
+
     }
 }
