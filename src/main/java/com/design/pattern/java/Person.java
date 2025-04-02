@@ -1,5 +1,8 @@
 package com.design.pattern.java;
 
+import lombok.Builder;
+import lombok.Data;
+
 import java.util.Objects;
 
 
@@ -11,24 +14,10 @@ import java.util.Objects;
 
 
 
+@Data
 public class Person {
     private String name;
     private String age;
-
-
-    static int count = 0;
-
-
-
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Person(String name, String age) {
         this.name = name;
@@ -37,7 +26,23 @@ public class Person {
 
     public Person() {}
 
-//    public Person(String name) {
+    public String getName() {
+        return name;
+    }
+
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    //    public Person(String name) {
 //        this.name = name;
 //    }
 

@@ -5,15 +5,33 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class Test3 {
     public static void main(String[] args) {
-        Test3 test3 = new Test3();
-        System.out.println(test3.findMedianSortedArrays(new int[]{1, 2}, new int[]{3, 4}));
+        Person person = new Person("John", "25");
+        Person person2 = new Person("John", "26");
+
+        System.out.println(person.equals(person2));
+
+        System.out.println(Math.sqrt(4));
+        System.out.println(Math.pow(2, 3));
+
+        Box<String> box = new Box<>();
+        box.setValue("Hello, World!");
+
+
+        Box<Person> box1 = createBox(new Person("John", "25"));
+        Person p1 = box1.getValue();
+        System.out.println(p1.getName() + " " + p1.getAge());
+    }
+
+    public static <T> Box<T> createBox(T value) {
+        Box<T> box = new Box<>();
+        box.setValue(value);
+        return box;
     }
 
 
