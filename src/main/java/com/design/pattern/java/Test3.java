@@ -1,32 +1,65 @@
 package com.design.pattern.java;
 
+import java.awt.*;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 
 public class Test3 {
-    public static void main(String[] args) {
-        Person person = new Person("John", "25");
-        Person person2 = new Person("John", "26");
+    static {
 
-        System.out.println(person.equals(person2));
-
-        System.out.println(Math.sqrt(4));
-        System.out.println(Math.pow(2, 3));
-
-        Box<String> box = new Box<>();
-        box.setValue("Hello, World!");
-
-
-        Box<Person> box1 = createBox(new Person("John", "25"));
-        Person p1 = box1.getValue();
-        System.out.println(p1.getName() + " " + p1.getAge());
     }
+    public static void main(String[] args) {
+
+
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                for (int i = 0; i < 5; i++) {
+                    toolkit.beep();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        thread.start();
+
+        for (int i = 0; i < 5; i++) {
+            System.out.println("DDIDIDIDINGGGG");
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        ConcurrentHashMap<String,String> concurrentHashMap = new ConcurrentHashMap<>();
+        concurrentHashMap.put("","");
+
+        Deque<Integer> a = new ArrayDeque<>();
+
+        Stack<Integer> b = new Stack<>();
+    }
+
+
 
     public static <T> Box<T> createBox(T value) {
         Box<T> box = new Box<>();
@@ -209,4 +242,85 @@ public class Test3 {
         }
 
     }
+
+    public int maxProfit(int[] prices) {
+        int max = 0;
+        int minPrice = prices[0];
+
+        for (int price : prices) {
+            minPrice = Math.min(minPrice, price);
+            max = Math.max(max, price - minPrice);
+        }
+        return max;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        Deque<Integer> deque = new LinkedList<>();
+
+        ListNode node = head;
+
+        while(node != null){
+            deque.add(node.val);
+            node = node.next;
+        }
+
+        while(!deque.isEmpty() && deque.size() > 1){
+            if (deque.pollFirst() != deque.pollLast()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if (list1 == null) return list2;
+        if (list2 == null) return list1;
+
+        if (list1.val < list2.val) {
+            list1.next = mergeTwoLists(list1.next, list2);
+            return list1;
+        } else {
+            list2.next = mergeTwoLists(list1, list2.next);
+            return list2;
+        }
+    }
+
+    public ListNode reverseList(ListNode head) {
+        ListNode result = new ListNode();
+
+        Deque<Integer> stack = new LinkedList<>();
+        ListNode node = head;
+        while(node != null){
+            stack.push(node.val);
+            node = node.next;
+        }
+
+        while(!stack.isEmpty()){
+            ListNode newNode = new ListNode(stack.pollLast());
+            newNode.next = result.next;
+            result.next = newNode;
+        }
+        return result.next;
+    }
+
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) return null;
+        //홀수 노드
+        ListNode odd = head;
+        //짝수 노드
+        ListNode even = head.next;
+        //짝수 첫번쨰 노드
+        ListNode evenHead = even;
+
+        //반복하면서 홀짝 노드 처리
+        while(even != null && even.next != null) {
+            odd.next = odd.next.next;
+            even.next = even.next.next;
+            odd = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
+    }
+
 }
