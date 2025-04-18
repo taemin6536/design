@@ -16,12 +16,51 @@ import java.util.Stack;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 public class Test3 {
     static {
 
     }
     public static void main(String[] args) {
+        List<String> strs = List.of("a","a","a", "b", "c");
+        Set<String> set = Set.of("a", "b", "c");
+
+        final List<String> list = set.stream().toList();
+
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("asb");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("234");
+        //기본 타입
+        int u = 0;
+
+
+        //Wrapper 클래스 타입
+        Integer g;
+        String s;
+        보안, 불변성, 등 이런게 중요해
+                왜? 거의 대부분 암호 key값 이런게 String 사용되잖아
+        //String은 불변성, 보안성, 스레드 안전성
+        String + 연산은 주의해야함
+            성능에 문제가 있음
+        StringBuilder, StringBuffer
+
+        StringBuilder는 스레드 안전하지 않음
+        StringBuffer는 스레드 안전함 synchronized { }
+                그래서 성능적으로 StringBuilder가 더 좋음
+
+
+        //Integer와 int의 차이는?
+        //Integer는 객체로 다룰 수 있지만 int는 기본 타입으로 다룬다.
+        //Integer는 null을 가질 수 있지만 int는 null을 가질 수 없다.
+
+
+
+
+
+        System.out.println();
 
 
 
@@ -57,6 +96,9 @@ public class Test3 {
         Deque<Integer> a = new ArrayDeque<>();
 
         Stack<Integer> b = new Stack<>();
+
+
+
     }
 
 
@@ -322,5 +364,62 @@ public class Test3 {
         odd.next = evenHead;
         return head;
     }
+
+    public boolean isValid(String s) {
+        Deque<Character> deque = new ArrayDeque<>();
+
+        Map<Character, Character> map = new HashMap<>() {
+            {
+                put(')', '(');
+                put('}', '{');
+                put(']', '[');
+            }
+        };
+
+        for (int i = 0; i < s.length(); i++) {
+            if (!map.containsKey(s.charAt(i))){
+                deque.push(s.charAt(i));
+            }else if (deque.isEmpty() || deque.pop() != map.get(s.charAt(i))){
+                return false;
+            }
+
+        }
+        return deque.isEmpty();
+    }
+
+    public int solution(int n) {
+        int answer = 0;
+
+        for (int i = 1; i <= n; i++) {
+            int sum = 0;
+            for (int j = i; j <= n; j++) {
+                sum += j;
+                if (sum == n) {
+                    answer++;
+                    break;
+                } else if (sum > n) {
+                    break;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+
+    public int solution(int[] schedules, int[][] timelogs, int startday) {
+        int answer = schedules.length;
+
+        for (int i = 0; i < schedules.length; i++) {
+            for (int j = 0; j < 7; j++) {
+                if ((startday + j) % 7 > 0 && (startday + j) % 7 <6 && (timelogs[i][j] / 100)*60 + (timelogs[i][j] % 100) > 60*(schedules[i]/100) + (schedules[i]%100) + 10) {
+                    answer--;
+                    break;
+                }
+            }
+        }
+        return answer;
+    }
+
 
 }
