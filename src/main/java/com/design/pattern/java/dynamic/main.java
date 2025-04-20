@@ -20,7 +20,4 @@ public class main {
 
     }
 
-    public void test123() {
-        List<Apple> redAndHeavyApples=filterApples(inventory ,new AppleGreenColorPredicate());
-    }
 }

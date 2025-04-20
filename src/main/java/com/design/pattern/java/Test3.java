@@ -40,16 +40,16 @@ public class Test3 {
         //Wrapper 클래스 타입
         Integer g;
         String s;
-        보안, 불변성, 등 이런게 중요해
-                왜? 거의 대부분 암호 key값 이런게 String 사용되잖아
-        //String은 불변성, 보안성, 스레드 안전성
-        String + 연산은 주의해야함
-            성능에 문제가 있음
-        StringBuilder, StringBuffer
-
-        StringBuilder는 스레드 안전하지 않음
-        StringBuffer는 스레드 안전함 synchronized { }
-                그래서 성능적으로 StringBuilder가 더 좋음
+//        보안, 불변성, 등 이런게 중요해
+//                왜? 거의 대부분 암호 key값 이런게 String 사용되잖아
+//        //String은 불변성, 보안성, 스레드 안전성
+//        String + 연산은 주의해야함
+//            성능에 문제가 있음
+//        StringBuilder, StringBuffer
+//
+//        StringBuilder는 스레드 안전하지 않음
+//        StringBuffer는 스레드 안전함 synchronized { }
+//                그래서 성능적으로 StringBuilder가 더 좋음
 
 
         //Integer와 int의 차이는?
