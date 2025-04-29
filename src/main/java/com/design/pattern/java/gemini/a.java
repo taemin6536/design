@@ -88,16 +88,16 @@ class OrderSystem {
     public static void main(String[] args) {
         Order order = new Order(10000);
 
-        DiscountStrategy percentageDiscount = DiscountStrategyFactory.getStrategy("PERCENTAGE");
-        order.applyDiscount(percentageDiscount);
-        System.out.println("Price after percentage discount: " + order.getPrice());
-
-        DiscountStrategy amountDiscount = DiscountStrategyFactory.getStrategy("AMOUNT");
-        order.applyDiscount(amountDiscount);
-        System.out.println("Price after amount discount: " + order.getPrice());
-
-        DiscountStrategy maxDiscount = DiscountStrategyFactory.getStrategy("MAX");
-        order.applyDiscount(maxDiscount);
-        System.out.println("Price after max discount: " + order.getPrice());
+//        DiscountStrategy percentageDiscount = DiscountStrategyFactory.getStrategy("PERCENTAGE");
+//        order.applyDiscount(percentageDiscount);
+//        System.out.println("Price after percentage discount: " + order.getPrice());
+//
+//        DiscountStrategy amountDiscount = DiscountStrategyFactory.getStrategy("AMOUNT");
+//        order.applyDiscount(amountDiscount);
+//        System.out.println("Price after amount discount: " + order.getPrice());
+//
+//        DiscountStrategy maxDiscount = DiscountStrategyFactory.getStrategy("MAX");
+//        order.applyDiscount(maxDiscount);
+//        System.out.println("Price after max discount: " + order.getPrice());
     }
 }

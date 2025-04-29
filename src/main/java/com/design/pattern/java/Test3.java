@@ -1,6 +1,12 @@
 package com.design.pattern.java;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,31 +17,16 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.stream.Collectors;
 
 public class Test3 {
     static {
 
     }
     public static void main(String[] args) {
-        List<String> strs = List.of("a","a","a", "b", "c");
-        Set<String> set = Set.of("a", "b", "c");
-
-        final List<String> list = set.stream().toList();
-
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("asb");
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("234");
-        //기본 타입
-        int u = 0;
-
 
         //Wrapper 클래스 타입
         Integer g;
@@ -56,11 +47,22 @@ public class Test3 {
         //Integer는 객체로 다룰 수 있지만 int는 기본 타입으로 다룬다.
         //Integer는 null을 가질 수 있지만 int는 null을 가질 수 없다.
 
-
-
-
-
         System.out.println();
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(20000);
+
+            final Socket accept = serverSocket.accept();
+            final InetSocketAddress inetSocketAddress = (InetSocketAddress) accept.getRemoteSocketAddress();
+
+            InetAddress address = inetSocketAddress.getAddress();
+            int port = inetSocketAddress.getPort();
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
 
 
@@ -99,6 +101,7 @@ public class Test3 {
 
 
 
+        dailyTemperatures(new int[]{23,24,25,21,19,22,26,23});
     }
 
 
@@ -421,5 +424,67 @@ public class Test3 {
         return answer;
     }
 
+    public static int[] dailyTemperatures(int[] temperatures) {
+        int[] result = new int[temperatures.length];
 
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < temperatures.length; i++) {
+            while(!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]){
+                int last = stack.pop();
+                result[last] = i - last;
+            }
+            stack.push(i);
+        }
+        return result;
+    }
+    class MyStack {
+        private Queue<Integer> q = new LinkedList<>();
+        public MyStack() {
+
+        }
+
+        public void push(int x) {
+            q.add(x);
+            for (int i = 1; i < q.size(); i++) {
+                q.add(q.remove());
+            }
+        }
+
+        public int pop() {
+            return q.poll();
+        }
+
+        public int top() {
+            return q.peek();
+        }
+
+        public boolean empty() {
+            return q.isEmpty();
+        }
+    }
+
+    class MyQueue {
+
+        Deque<Integer> q = new ArrayDeque<>();
+
+        public MyQueue() {
+
+        }
+
+        public void push(int x) {
+            q.push(x);
+        }
+
+        public int pop() {
+            return q.pollLast();
+        }
+
+        public int peek() {
+            return q.peekLast();
+        }
+
+        public boolean empty() {
+            return q.isEmpty();
+        }
+    }
 }
